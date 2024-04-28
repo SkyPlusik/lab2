@@ -26,8 +26,8 @@ def CompressedCoords(rects):
     for rect in rects:
         coordsX.append(rect[0])
         coordsX.append(rect[2])
-        coordsY.append(rect[0])
-        coordsY.append(rect[2])
+        coordsY.append(rect[1])
+        coordsY.append(rect[3])
     coordsX = list(set(coordsX))
     coordsX.sort()
     coordsY = list(set(coordsY))
