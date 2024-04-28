@@ -25,18 +25,18 @@ def Checked(x1, y1, x2, y2, x, y):
     if ((x1 <= x) and (x < x2) and (y1 <= y) and (y < y2)):
          return 1
     return 0
-def CompressedCoords(rects, T):
-    coords = []
+def CompressedCoords(rects):
+    coordsX, coordsY = [], []
     for rect in rects:
-        if (T == 'x'):
-            coords.append(rect[0])
-            coords.append(rect[2])
-        else:
-            coords.append(rect[0])
-            coords.append(rect[2])
-    coords = list(set(coords))
-    coords.sort()
-    return coords
+        coordsX.append(rect[0])
+        coordsX.append(rect[2])
+        coordsY.append(rect[0])
+        coordsY.append(rect[2])
+    coordsX = list(set(coordsX))
+    coordsX.sort()
+    coordsY = list(set(coordsY))
+    coordsY.sort()
+    return coordsX, coordsY
 def CreateMatrix(rects, coordsX, coordsY):
     n, m = len(coordsY), len(coordsX)
     matrix = []
@@ -69,8 +69,7 @@ for i in range(1, 11):
     points = Points(N)
     # подготовка
     start_preproc = time.perf_counter()
-    coordsX = CompressedCoords(rects, 'x')
-    coordsY = CompressedCoords(rects, 'y')
+    coordsX, coordsY = CompressedCoords(rects)
     matrix = CreateMatrix(rects, coordsX, coordsY)
     end_preproc = time.perf_counter()
     n, m = len(coordsY), len(coordsX)
