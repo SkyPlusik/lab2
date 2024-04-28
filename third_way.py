@@ -82,21 +82,23 @@ def insert(node, start, end, status):
     return new_node
 
 def build_persistent_segment_tree(rectangles, coordsY):
+    if not rectangles:
+        return None
     n = len(coordsY)
     events = []
     for rectangle in rectangles:
-        events.append([rectangle[0], rectangle[1], rectangle[3], 1])
-        events.append([rectangle[2], rectangle[1], rectangle[3], -1])
-    events.sort()
+        events.append(Event(rectangle[0], rectangle[1], rectangle[3], 1))
+        events.append(Event(rectangle[2], rectangle[1], rectangle[3], -1))
+    events.sort(key=lambda element: element.x)
     root = build_segment_tree(0, n)
     roots = []
-    x = events[0][0]
+    x = events[0].x
     for event in events:
-        if x != event[0]:
+        if x != event.x:
             roots.append(root)
-            x = event[0]
-        y1, y2 = BinSearch(coordsY, event[1]), BinSearch(coordsY, event[2])
-        root = insert(root, y1, y2, event[3])
+            x = event.x
+        y1, y2 = BinSearch(coordsY, event.left), BinSearch(coordsY, event.right)
+        root = insert(root, y1, y2, event.value)
     roots.append(root)
     return roots
 
